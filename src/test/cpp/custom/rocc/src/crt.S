@@ -16,8 +16,8 @@ r_type_insn(0b0000001, _rs2, _rs1, 0b110, _rd, 0b0001011)
     li x28, 2
     li x1, 0x00000000
     li x2, 0x00000000
-    RoCC(1, 1, 2)
-    bne x1, x0, fail
+    RoCC(3, 1, 2)
+    bne x3, x1, fail
 
 //Test 3
     li x28, 3
@@ -36,14 +36,6 @@ r_type_insn(0b0000001, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
 //Test 5
     li x28, 5
-    li x4, 0xFF000102
-    li x1, 0xFFFFFFFF
-    li x2, 0x00010203
-    RoCC(3, 1, 2)
-    bne x3, x4, fail
-
-//Test 5
-    li x28, 6
     li x5, 0x00000006
     li x1, 0x00000001
     li x2, 0x00000002

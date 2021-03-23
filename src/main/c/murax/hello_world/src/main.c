@@ -3,6 +3,16 @@
 
 #include "murax.h"
 
+inline int RoCC(int rs1, int rs2){
+	int RoCC_result;
+	asm volatile(
+		".insn r 0x0b,6,1,%0,%1,%2"
+		:"=r"(RoCC_result)
+		:"r"(rs1),"r"(rs2)
+	);
+	return RoCC_result;
+}
+
 void print(const char*str){
 	while(*str){
 		uart_write(UART,*str);
@@ -26,6 +36,16 @@ void main() {
     println("hello world arty a7 v1");
     const int nleds = 4;
 	const int nloops = 2000000;
+
+	/************RoCC TEST***********/
+	int a = 1, b = 2;
+	int c = RoCC(a, b);
+	println("RoCC executed");
+	if(c == 3) 
+		println("RoCC TEST SUCCESS!");
+	else 
+		println("RoCC TEST FAIL!");
+
     while(1){
     	for(unsigned int i=0;i<nleds-1;i++){
     		GPIO_A->OUTPUT = 1<<i;

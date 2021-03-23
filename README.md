@@ -107,6 +107,18 @@ Then you can find the simulation wave in:
 - `src/test/cpp/RoCCTest/custom_rocc.vcd`
 
 
+To test RoCC instruction on Murax SoC, run the following command in the root directory of this repository:
+```sh
+cd src/main/c/murax/hello_world/
+make
+
+#In the root of VexRiscv repository
+sbt "runMain vexriscv.RoCC.MuraxWithRamInit"
+```
+
+Then create a vivodo project and program the bitstream onto FPGA board, then some information should be printed to the uart output.
+
+
 
 ## Interactive debug of the simulated CPU via GDB OpenOCD and Verilator
 To use this, you just need to use the same command as with running tests, but adding `DEBUG_PLUGIN_EXTERNAL=yes` in the make arguments.

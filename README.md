@@ -6,7 +6,6 @@
 - [CPU generation](#cpu-generation)
 - [RoCC test](#RoCC-test)
 - [Interactive debug of the simulated CPU via GDB OpenOCD and Verilator](#interactive-debug-of-the-simulated-cpu-via-gdb-openocd-and-verilator)
-- [Briey SoC](#briey-soc)
 - [Murax SoC](#murax-soc)
 - [Running Linux](#running-linux)
 - [Build the RISC-V GCC](#build-the-risc-v-gcc)
@@ -91,7 +90,7 @@ NOTES:
    do a "sbt clean compile publish-local" in it as described in the dependencies chapter.
 
 ## RoCC test
-To test RoCC instruction, run the following command in the root directory of this repository:
+To test RoCC instruction on VexRiscv core, run the following command in the root directory of this repository:
 
 ```sh
 cd src/test/cpp/custom/rocc/
@@ -143,37 +142,6 @@ load
 continue
 
 # Now it should print messages in the Verilator simulation of the CPU
-```
-
-
-## Briey SoC
-As a demonstration, a SoC named Briey is implemented in `src/main/scala/vexriscv/demo/Briey.scala`. This SoC is very similar to
-the [Pinsec SoC](https://spinalhdl.github.io/SpinalDoc-RTD/SpinalHDL/Legacy/pinsec/hardware_toplevel.html#):
-
-![Briey SoC](assets/brieySoc.png?raw=true "")
-
-To generate the Briey SoC Hardware:
-
-```sh
-sbt "runMain vexriscv.demo.Briey"
-```
-
-To run the verilator simulation of the Briey SoC, which can then be connected to OpenOCD/GDB, first get these dependencies:
-
-```sh
-sudo apt-get install build-essential xorg-dev libudev-dev libgl1-mesa-dev libglu1-mesa-dev libasound2-dev libpulse-dev libopenal-dev libogg-dev libvorbis-dev libaudiofile-dev libpng12-dev libfreetype6-dev libusb-dev libdbus-1-dev zlib1g-dev libdirectfb-dev libsdl2-dev
-```
-
-Then go in `src/test/cpp/briey` and run the simulation with (UART TX is printed in the terminal, VGA is displayed in a GUI):
-
-```sh
-make clean run
-```
-
-To connect OpenOCD (https://github.com/SpinalHDL/openocd_riscv) to the simulation :
-
-```sh
-src/openocd -f tcl/interface/jtag_tcp.cfg -c "set BRIEY_CPU0_YAML /home/spinalvm/Spinal/VexRiscv/cpu0.yaml" -f tcl/target/briey.cfg
 ```
 
 

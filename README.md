@@ -7,7 +7,6 @@
 - [RoCC test](#RoCC-test)
 - [Interactive debug of the simulated CPU via GDB OpenOCD and Verilator](#interactive-debug-of-the-simulated-cpu-via-gdb-openocd-and-verilator)
 - [Murax SoC](#murax-soc)
-- [Running Linux](#running-linux)
 - [Build the RISC-V GCC](#build-the-risc-v-gcc)
 
 

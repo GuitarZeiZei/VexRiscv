@@ -4,47 +4,19 @@ _start:
 #define r_type_insn(_f7, _rs2, _rs1, _f3, _rd, _opc) \
 .word (((_f7) << 25) | ((_rs2) << 20) | ((_rs1) << 15) | ((_f3) << 12) | ((_rd) << 7) | ((_opc) << 0))
 
-#define RoCC(_rd, _rs1, _rs2 ) \
-r_type_insn(0b0000001, _rs2, _rs1, 0b110, _rd, 0b0001011)
+#define RoCCFadd(_rd, _rs1, _rs2 ) \
+r_type_insn(0b0000010, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
-//Test 1
-    li x28, 1
-    RoCC(1, 0, 0)
-    bne x1, x0, fail
+li x28, 1
+//0.2
+li x1,0x3E4CCCCC
+//0.4
+li x2,0x3ECCCCCC
 
-//Test 2
-    li x28, 2
-    li x1, 0x00000000
-    li x2, 0x00000000
-    RoCC(3, 1, 2)
-    bne x3, x1, fail
-
-//Test 3
-    li x28, 3
-    li x1, 0x01020304
-    li x2, 0x00000000
-    RoCC(3, 1, 2)
-    bne x3, x1, fail
-
-//Test 4
-    li x28, 4
-    li x4, 0x0306090C
-    li x1, 0x01020304
-    li x2, 0x02040608
-    RoCC(3, 1, 2)
-    bne x3, x4, fail
-
-//Test 5
-    li x28, 5
-    li x5, 0x00000006
-    li x1, 0x00000001
-    li x2, 0x00000002
-    li x3, 0x00000003
-    RoCC(1, 1, 2)
-    RoCC(1, 1, 3)
-    bne x1, x5, fail
-
-    j pass
+li x4,0x3F199999
+RoCCFadd(3,1,2)
+bne x3,x4,fail
+j pass
 
 fail: //x28 => error code
     li x2, 0xF00FFF24

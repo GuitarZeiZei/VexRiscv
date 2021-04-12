@@ -82,6 +82,8 @@ class RoCCPlugin(c : CoProcessor) extends Plugin[VexRiscv] {
         val lo = (func.io.cmd.payload.getBitsWidth - 32)
         func.io.cmd.payload.assignFromBits(input(INSTRUCTION), hi, lo)
 
+	func.io.cmd.cpuinstruction := input(INSTRUCTION)
+
         when(arbitration.isValid && input(stageable)) {
           func.io.cmd.valid := !arbitration.isStuckByOthers && !arbitration.removeIt
           arbitration.haltItself := memory.arbitration.isValid && memory.input(stageable)

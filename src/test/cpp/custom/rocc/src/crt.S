@@ -7,14 +7,12 @@ _start:
 #define RoCCFadd(_rd, _rs1, _rs2 ) \
 r_type_insn(0b0000010, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
+#define RoCCFsub(_rd, _rs1, _rs2 ) \
+r_type_insn(0b0000011, _rs2, _rs1, 0b110, _rd, 0b0001011)
+
 #define RoCC(_rd, _rs1, _rs2 ) \
 r_type_insn(0b0000001, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
-//Test 4
-    li x28, 4
-    li x1, 0x01020304
-    li x2, 0x02040608
-    RoCC(3, 1, 2)
 
 //TEST 1
 	li x28, 1
@@ -26,15 +24,19 @@ r_type_insn(0b0000001, _rs2, _rs1, 0b110, _rd, 0b0001011)
 	li x28, 2
 	li x1,0xBFC80000  //-1.5625
 	li x2,0xC010A3D7  //-2.26
-	RoCCFadd(3,1,2)
+	RoCCFsub(3,1,2)
 
 //TEST 3
 	li x28, 3
 	li x1,0xBE4CCCCC  //-0.2
 	li x2,0x3F4CCCCC  //0.8
-	RoCCFadd(3,1,2)
+	RoCCFsub(3,1,2)
 
-
+//TEST 4
+	li x28, 4
+	li x1,0x01020304
+	li x2,0x02040608
+	RoCC(3,1,2)
 
 j pass
 

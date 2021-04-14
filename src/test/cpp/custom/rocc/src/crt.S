@@ -13,7 +13,7 @@ r_type_insn(0b0000001, _rs2, _rs1, 0b110, _rd, 0b0001011)
 #define RoCCFmul(_rd, _rs1, _rs2 ) \
 r_type_insn(0b0000010, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
-#define RoCC(_rd, _rs1, _rs2 ) \
+#define RoCCdiv(_rd, _rs1, _rs2 ) \
 r_type_insn(0b0000011, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
 
@@ -39,15 +39,15 @@ r_type_insn(0b0000011, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
 //TEST 4
 	li x28, 4
-	li x1,0x01020304
-	li x2,0x02040608
-	RoCC(3,1,2)
+	li x1,0x41BB9999  //23.45
+	li x2,0x41752F1A  //15.324
+	RoCCdiv(3,1,2)
 
 //TEST 5
 	li x28, 5
-	li x1,0x12345678
-	li x2,0x87654321
-	RoCC(3,1,2)
+	li x1,0xBFC80000  //-1.5625
+	li x2,0xC010A3D7  //-2.26
+	RoCCdiv(3,1,2)
 
 //TEST 6
 	li x28, 6

@@ -12,6 +12,7 @@ import Utilities._
 class InputBundle extends Bundle {
   val cpuRS1 = Bits(XLEN bits)
   val cpuRS2 = Bits(XLEN bits)
+  val cpuinstruction = Bits(XLEN bits)
 }
 
 class OutputBundle extends Bundle

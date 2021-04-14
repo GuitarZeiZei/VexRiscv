@@ -4,47 +4,71 @@ _start:
 #define r_type_insn(_f7, _rs2, _rs1, _f3, _rd, _opc) \
 .word (((_f7) << 25) | ((_rs2) << 20) | ((_rs1) << 15) | ((_f3) << 12) | ((_rd) << 7) | ((_opc) << 0))
 
-#define RoCC(_rd, _rs1, _rs2 ) \
+#define RoCCFadd(_rd, _rs1, _rs2 ) \
+r_type_insn(0b0000000, _rs2, _rs1, 0b110, _rd, 0b0001011)
+
+#define RoCCFsub(_rd, _rs1, _rs2 ) \
 r_type_insn(0b0000001, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
-//Test 1
-    li x28, 1
-    RoCC(1, 0, 0)
-    bne x1, x0, fail
+#define RoCCFmul(_rd, _rs1, _rs2 ) \
+r_type_insn(0b0000010, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
-//Test 2
-    li x28, 2
-    li x1, 0x00000000
-    li x2, 0x00000000
-    RoCC(3, 1, 2)
-    bne x3, x1, fail
+#define RoCCdiv(_rd, _rs1, _rs2 ) \
+r_type_insn(0b0000011, _rs2, _rs1, 0b110, _rd, 0b0001011)
 
-//Test 3
-    li x28, 3
-    li x1, 0x01020304
-    li x2, 0x00000000
-    RoCC(3, 1, 2)
-    bne x3, x1, fail
 
-//Test 4
-    li x28, 4
-    li x4, 0x0306090C
-    li x1, 0x01020304
-    li x2, 0x02040608
-    RoCC(3, 1, 2)
-    bne x3, x4, fail
+//TEST 1
+	li x28, 1
+	li x1,0x3E4CCCCC  //0.2
+	li x2,0x3ECCCCCC  //0.4
+	RoCCFadd(3,1,2)
+	li x4,0x3F199999
+	bne x4,x3,fail
 
-//Test 5
-    li x28, 5
-    li x5, 0x00000006
-    li x1, 0x00000001
-    li x2, 0x00000002
-    li x3, 0x00000003
-    RoCC(1, 1, 2)
-    RoCC(1, 1, 3)
-    bne x1, x5, fail
+//TEST 2
+	li x28, 2
+	li x1,0xBFC80000  //-1.5625
+	li x2,0xC010A3D7  //-2.26
+	RoCCFsub(3,1,2)   //0.6975
 
-    j pass
+//TEST 3
+	li x28, 3
+	li x1,0xBE4CCCCC  //-0.2
+	li x2,0x3F4CCCCC  //0.8
+	RoCCFmul(3,1,2)
+
+//TEST 4
+	li x28, 4
+	li x1,0x41BB9999  //23.45
+	li x2,0x41752F1A  //15.324
+	RoCCdiv(3,1,2)
+
+//TEST 5
+	li x28, 5
+	li x1,0xBFC80000  //-1.5625
+	li x2,0xC010A3D7  //-2.26
+	RoCCdiv(3,1,2)
+
+//TEST 6
+	li x28, 6
+	li x1,0xBFC80000  //-1.5625
+	li x2,0xC010A3D7  //-2.26
+	RoCCFmul(3,1,2)
+
+//TEST 7
+	li x28, 7
+	li x1,0xBE4CCCCC  //-0.2
+	li x2,0x3F4CCCCC  //0.8
+	RoCCFsub(3,1,2)
+
+//TEST 8
+	li x28, 8
+	li x1,0x41BB9999  //23.45
+	li x2,0x41752F1A  //15.324
+	RoCCFadd(3,1,2)
+	RoCCFsub(3,1,2)   //8.126
+
+j pass
 
 fail: //x28 => error code
     li x2, 0xF00FFF24

@@ -1,3 +1,17 @@
+# Li's graduation project 
+
+### This is Li Mengjie's undergraduate graduation project from Southeast University, School of Electronics and Engineering.
+
+Author  | Li Meng-Jie
+--------|------------
+Mailbox | 213173648@seu.edu.cn
+
+## What this project has done:
+- Transplant RoCC coprocessor interface to VexRiscv
+- Design a FPU coprocessor
+- Verify the design by CPU simulation, SoC simulation and FPGA.
+
+
 ## Index
 
 - [Index](#index)
@@ -156,6 +170,8 @@ Murax is a very light SoC (it fits in an ICE40 FPGA) which can work without any 
 - 32 GPIO pin
 - one 16 bits prescaler, two 16 bits timers
 - one UART with tx/rx fifo
+
+![Briey SoC](assets/Murax.svg?raw=true "")
 
 
 Its implementation can be found here: `src/main/scala/vexriscv/demo/Murax.scala`.
